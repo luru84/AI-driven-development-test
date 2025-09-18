@@ -21,5 +21,7 @@ jobs:
         run: isort --check-only .
       - name: Lint (flake8)
         run: PYTHONPATH=src flake8 .
+      - name: Type check (mypy)
+        run: PYTHONPATH=src mypy src
       - name: Test
         run: PYTHONPATH=src pytest -q
