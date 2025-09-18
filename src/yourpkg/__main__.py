@@ -1,7 +1,7 @@
 import logging
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
-log = logging.getLogger("yourpkg")  # ← これを入れる
+log = logging.getLogger("yourpkg")
 
 
 def main():
