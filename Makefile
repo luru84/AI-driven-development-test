@@ -21,8 +21,7 @@ fmt:
 	$(ACT) && black . && isort .
 
 lint:
-	@echo "skip flake8 for now"
+	$(ACT) && PYTHONPATH=src flake8 .
 
 clean:
 	rm -rf __pycache__ .pytest_cache $(VENV)
-
