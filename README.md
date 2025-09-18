@@ -45,7 +45,8 @@ make test    # pytest 実行
 | `make run` | `yourpkg` を起動（`__main__.py`） |
 | `make test` | `pytest -q` を実行 |
 | `make fmt` | `black` + `isort` で整形 |
-| `make lint` | `flake8`（必要に応じて運用） |
+| `make lint` | `flake8` で静的解析 |
+| `make typecheck` | `mypy` で型チェック |
 | `make clean` | キャッシュ掃除 |
 
 ## ローカル実行
@@ -86,6 +87,8 @@ git checkout -b feat/change-sample
 ```bash
 make run
 make test
+make lint
+make typecheck
 ```
 
 ### 3) コミット

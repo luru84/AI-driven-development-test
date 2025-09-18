@@ -2,7 +2,7 @@ PY := python3
 VENV := .venv
 ACT := . $(VENV)/bin/activate
 
-.PHONY: setup test run fmt lint clean
+.PHONY: setup test run fmt lint typecheck clean
 
 setup:
 	$(PY) -m venv $(VENV)
@@ -21,8 +21,10 @@ fmt:
 	$(ACT) && black . && isort .
 
 lint:
-	@echo "skip flake8 for now"
+	$(ACT) && PYTHONPATH=src flake8 .
+
+typecheck:
+	$(ACT) && PYTHONPATH=src mypy src
 
 clean:
 	rm -rf __pycache__ .pytest_cache $(VENV)
-

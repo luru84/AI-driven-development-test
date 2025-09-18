@@ -1,3 +1,1 @@
-numpy
-pandas
-scikit-learn
+# (空) 本番依存は必要になった時点で追加してください。

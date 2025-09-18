@@ -19,7 +19,9 @@ jobs:
         run: black --check .
       - name: Lint (isort)
         run: isort --check-only .
-      - name: Lint (flake8)   # 必要なければ echo "skip flake8" に変更可
-        run: echo "skip flake8"
+      - name: Lint (flake8)
+        run: PYTHONPATH=src flake8 .
+      - name: Type check (mypy)
+        run: PYTHONPATH=src mypy src
       - name: Test
         run: PYTHONPATH=src pytest -q
