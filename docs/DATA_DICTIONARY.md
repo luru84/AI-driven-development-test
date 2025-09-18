@@ -1,0 +1,3 @@
+- `id`: string / 匿名化
+- `ts`: ISO8601 (UTC)
+- `label`: {0,1}
