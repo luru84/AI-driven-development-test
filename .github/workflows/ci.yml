@@ -19,8 +19,7 @@ jobs:
         run: black --check .
       - name: Lint (isort)
         run: isort --check-only .
-      - name: Lint (flake8)   # いまスキップ中ならこのステップは削除/echoでOK
+      - name: Lint (flake8)   # 必要なければ echo "skip flake8" に変更可
         run: echo "skip flake8"
       - name: Test
         run: PYTHONPATH=src pytest -q
-
