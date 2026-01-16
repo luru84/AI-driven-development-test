@@ -1,27 +1,10 @@
-name: CI
+name: CI (placeholder)
 on:
   pull_request:
   push:
     branches: [ "main" ]
 jobs:
-  build:
+  placeholder:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Install deps
-        run: |
-          python -m pip install -U pip
-          pip install -r requirements.txt -r requirements-dev.txt
-      - name: Lint (black)
-        run: black --check .
-      - name: Lint (isort)
-        run: isort --check-only .
-      - name: Lint (flake8)
-        run: PYTHONPATH=src flake8 .
-      - name: Type check (mypy)
-        run: PYTHONPATH=src mypy src
-      - name: Test
-        run: PYTHONPATH=src pytest -q
+      - run: echo "Select a stack with ./scripts/init-stack.sh <stack> (available: python)"*** End Patchọdọ

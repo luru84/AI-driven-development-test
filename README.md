@@ -1,6 +1,6 @@
 # AI-driven Development Starter
 
-AI 駆動（アーティファクト駆動）でプロジェクトを進めるためのテンプレート。役割定義と作業ログの器を提供し、コードスタックは後から選べる想定です（デフォルトは Python を同梱）。
+AI 駆動（アーティファクト駆動）でプロジェクトを進めるためのテンプレート。`agent/` と `work/` で作業の型を提供し、コードスタックは後から選びます（現在は python テンプレを同梱）。
 
 ---
 
@@ -9,13 +9,14 @@ AI 駆動（アーティファクト駆動）でプロジェクトを進める�
    GitHub の「Use this template」または `gh repo create --template ...`
 2. **クローン**  
    `git clone <your-repo>`
-3. **スタックを選択**  
-   - 現在の同梱スタック: `python`（すでにルートに展開済み）  
-   - 将来のスタックは `templates/<stack>/` に追加して `./scripts/init-stack.sh <stack>` を実行  
-   - 例: `./scripts/init-stack.sh python`
+3. **スタックを選択して適用**  
+   - 現在の提供スタック: `python`  
+   - 適用コマンド: `./scripts/init-stack.sh python`  
+   - 追加スタックは `templates/<stack>/` に置き、同じコマンドで適用
 4. **AI の作業スペースを使う**  
    - 役割定義は `agent/`、作業ログ・生成物は `work/` に記録
-5. **セットアップ & チェック（python スタックの場合）**  
+5. **スタック固有のセットアップ**  
+   - python スタックを適用した場合:
    ```bash
    make setup   # venv 作成 + 依存インストール
    make test    # pytest 実行
@@ -24,11 +25,8 @@ AI 駆動（アーティファクト駆動）でプロジェクトを進める�
 ## プロジェクト構成
 ```text
 .
-├─ src/yourpkg/           # （例）Python サンプル
-│  ├─ __init__.py
-│  └─ __main__.py         # エントリポイント
-├─ tests/                 # （例）pytest サンプル
-│  └─ test_main_exists.py # __main__.py の main 関数が存在するか確認
+├─ src/                  # ※スタック適用後に配置されるコード
+├─ tests/                # ※スタック適用後に配置されるテスト
 ├─ docs/                  # 仕様・評価・用語など
 │  └─ ARCHITECTURE.md     # 1行アーキ図など
 ├─ agent/                 # AI エージェント用の状態（planner/implementer/reviewer など）
@@ -45,15 +43,16 @@ AI 駆動（アーティファクト駆動）でプロジェクトを進める�
 │  ├─ log.md              # 実行ログ
 │  └─ review.md           # レビュー結果
 ├─ scripts/init-stack.sh  # スタックをテンプレートから適用するスクリプト
-├─ templates/             # 言語/スタック別テンプレの置き場（今は説明のみ）
-├─ .github/workflows/ci.yml  # GitHub Actions ワークフロー
-├─ Makefile               # 開発コマンドをまとめた入口
-├─ requirements.txt       # 本番依存
-├─ requirements-dev.txt   # 開発用依存
+├─ templates/             # 言語/スタック別テンプレ（python 同梱）
+├─ .github/workflows/ci.yml  # プレースホルダ CI（スタック適用後に差し替え）
+├─ Makefile               # スタック未選択時は no-op（適用後に差し替え）
 └─ README.md
 ```
 
-## Make コマンド（python スタックの例）
+## Make コマンド
+スタック未選択時は no-op です。テンプレ適用後はスタックごとの Makefile が有効になります。
+
+python スタック適用後の例:
 | コマンド | 説明 |
 | --- | --- |
 | `make setup` | venv 作成 + 依存インストール |
@@ -82,25 +81,15 @@ echo "# Session $SESSION" > "$SESSION/README.md"
 
 状態（plan/decisions/prompts）は常に `/agent` に集約し、`/work` は自由に掃除できる一時領域として使うと回しやすいです。
 
-## ローカル実行（python スタック）
+## ローカル実行（python スタック適用後の例）
 ```bash
 make run
 # => hello from yourpkg
 ```
 
-## テスト（python スタック）
+## テスト（python スタック適用後の例）
 ```bash
 make test
-```
-
-## サンプルテスト
-```python
-import importlib
-
-
-def test_main_callable():
-    mod = importlib.import_module("yourpkg.__main__")
-    assert hasattr(mod, "main")
 ```
 
 ## 開発フロー（例）

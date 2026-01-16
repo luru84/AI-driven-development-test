@@ -1,30 +1,9 @@
-PY := python3
-VENV := .venv
-ACT := . $(VENV)/bin/activate
+.PHONY: setup test run fmt lint typecheck clean help
 
-.PHONY: setup test run fmt lint typecheck clean
+help:
+	@echo "Stack is not selected yet."
+	@echo "Use ./scripts/init-stack.sh <stack> to apply a template (available: python)."
 
-setup:
-	$(PY) -m venv $(VENV)
-	$(ACT) && pip install -U pip
-	@if [ -f requirements.txt ]; then $(ACT) && pip install -r requirements.txt; fi
-	@if [ -f requirements-dev.txt ]; then $(ACT) && pip install -r requirements-dev.txt; fi
-	@echo "✅ setup done"
-
-test:
-	$(ACT) && PYTHONPATH=src pytest -q
-
-run:
-	$(ACT) && PYTHONPATH=src $(PY) -m yourpkg
-
-fmt:
-	$(ACT) && black . && isort .
-
-lint:
-	$(ACT) && PYTHONPATH=src flake8 .
-
-typecheck:
-	$(ACT) && PYTHONPATH=src mypy src
-
-clean:
-	rm -rf __pycache__ .pytest_cache $(VENV)
+setup test run fmt lint typecheck clean:
+	@echo "No stack selected. Run: ./scripts/init-stack.sh python"
+	@true
