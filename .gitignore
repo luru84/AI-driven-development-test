@@ -13,3 +13,9 @@ build/
 .idea/
 work/*
 !work/.gitkeep
+!work/README.md
+!work/goal.md
+!work/plan.md
+!work/task.md
+!work/log.md
+!work/review.md

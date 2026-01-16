@@ -31,11 +31,19 @@ make test    # pytest 実行
 │  └─ test_main_exists.py # __main__.py の main 関数が存在するか確認
 ├─ docs/                  # 仕様・評価・用語など
 │  └─ ARCHITECTURE.md     # 1行アーキ図など
-├─ agent/                 # AI エージェント用の状態（plan/decisions/prompts/context）
-│  ├─ plan.md             # 直近のタスク計画
+├─ agent/                 # AI エージェント用の状態（planner/implementer/reviewer など）
+│  ├─ planner.md          # ゴールとステップ計画
+│  ├─ implementer.md      # 実行中ステップと生成物ログ
+│  ├─ reviewer.md         # 指摘・質問・判定
 │  ├─ decisions.md        # 判断ログ
-│  └─ prompts/            # system/user プロンプト
-├─ work/                  # 生成物・一時成果物 (gitignore 済)
+│  ├─ prompts/            # system/user プロンプト
+│  └─ context/            # 調査メモなど
+├─ work/                  # 生成物・一時成果物 (テンプレあり、gitignore 済)
+│  ├─ goal.md             # 目的とスコープ
+│  ├─ plan.md             # ステップ計画
+│  ├─ task.md             # 実行中タスクの詳細
+│  ├─ log.md              # 実行ログ
+│  └─ review.md           # レビュー結果
 ├─ .github/workflows/ci.yml  # GitHub Actions ワークフロー
 ├─ Makefile               # 開発コマンドをまとめた入口
 ├─ requirements.txt       # 本番依存
@@ -57,10 +65,11 @@ make test    # pytest 実行
 ## AI 駆動での進め方（/agent と /work）
 アーティファクト駆動で回すための最低限の作法を同梱しています。
 
-1. 計画は `agent/plan.md` に書く（3〜5 ステップを推奨）
+1. 役割別に記録: 計画は `agent/planner.md`、実装ログは `agent/implementer.md`、レビューは `agent/reviewer.md`
 2. 仕様解釈・スコープ変更は `agent/decisions.md` に追記
 3. LLM に渡すプロンプトは `agent/prompts/` に保存
-4. 生成物・ログは `work/<session>/` 配下に置く（`work/` は gitignore 済）
+4. 作業ノートは `work/goal.md`, `plan.md`, `task.md`, `log.md`, `review.md` をベースに回す
+5. 生成物・ログは `work/<session>/` 配下に置く（`work/` は gitignore 済）
 
 セッション例:
 ```bash
