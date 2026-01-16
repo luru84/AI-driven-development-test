@@ -31,6 +31,11 @@ make test    # pytest 実行
 │  └─ test_main_exists.py # __main__.py の main 関数が存在するか確認
 ├─ docs/                  # 仕様・評価・用語など
 │  └─ ARCHITECTURE.md     # 1行アーキ図など
+├─ agent/                 # AI エージェント用の状態（plan/decisions/prompts/context）
+│  ├─ plan.md             # 直近のタスク計画
+│  ├─ decisions.md        # 判断ログ
+│  └─ prompts/            # system/user プロンプト
+├─ work/                  # 生成物・一時成果物 (gitignore 済)
 ├─ .github/workflows/ci.yml  # GitHub Actions ワークフロー
 ├─ Makefile               # 開発コマンドをまとめた入口
 ├─ requirements.txt       # 本番依存
@@ -48,6 +53,23 @@ make test    # pytest 実行
 | `make lint` | `flake8` で静的解析 |
 | `make typecheck` | `mypy` で型チェック |
 | `make clean` | キャッシュ掃除 |
+
+## AI 駆動での進め方（/agent と /work）
+アーティファクト駆動で回すための最低限の作法を同梱しています。
+
+1. 計画は `agent/plan.md` に書く（3〜5 ステップを推奨）
+2. 仕様解釈・スコープ変更は `agent/decisions.md` に追記
+3. LLM に渡すプロンプトは `agent/prompts/` に保存
+4. 生成物・ログは `work/<session>/` 配下に置く（`work/` は gitignore 済）
+
+セッション例:
+```bash
+SESSION=work/$(date +%Y%m%d-%H%M)
+mkdir -p "$SESSION"/{artifacts,logs}
+echo "# Session $SESSION" > "$SESSION/README.md"
+```
+
+状態（plan/decisions/prompts）は常に `/agent` に集約し、`/work` は自由に掃除できる一時領域として使うと回しやすいです。
 
 ## ローカル実行
 ```bash
